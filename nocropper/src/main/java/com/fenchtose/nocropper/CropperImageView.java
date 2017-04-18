@@ -61,6 +61,7 @@ public class CropperImageView extends ImageView {
     public boolean DEBUG = false;
 
     private boolean gestureEnabled = true;
+    private CroppingListener mCroppingListener;
 
     public CropperImageView(Context context) {
         super(context);
@@ -176,6 +177,9 @@ public class CropperImageView extends ImageView {
 
         if (action == MotionEvent.ACTION_DOWN) {
             if (mGestureCallback != null) {
+                if (mCroppingListener != null){
+                    mCroppingListener.onCropping(true);
+                }
                 mGestureCallback.onGestureStarted();
             }
         }
@@ -191,6 +195,9 @@ public class CropperImageView extends ImageView {
 
                 if(mGestureCallback != null) {
                     mGestureCallback.onGestureCompleted();
+                    if (mCroppingListener != null){
+                        mCroppingListener.onCropping(false);
+                    }
                 }
 
                 return onUp();
@@ -851,6 +858,14 @@ public class CropperImageView extends ImageView {
         if (mBitmap != null) {
             mBitmap.recycle();
         }
+    }
+
+    public void setCroppingListener(CroppingListener listener) {
+        mCroppingListener = listener;
+    }
+
+    public interface CroppingListener{
+        void onCropping(boolean isCropping);
     }
 
     // Scroll and Gesture Listeners

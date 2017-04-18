@@ -129,6 +129,10 @@ public class CropperView extends FrameLayout {
         mImageView.setMinZoom(mMInZoom);
     }
 
+    public void setCroppingListener(CropperImageView.CroppingListener listener) {
+        mImageView.setCroppingListener(listener);
+    }
+
     public void cropToCenter() {
         mImageView.cropToCenter();
     }
